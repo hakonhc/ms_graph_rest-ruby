@@ -37,12 +37,12 @@ module MsGraphRest
     end
     Response.example('value' => [], "@odata.context" => "", "@odata.nextLink" => "")
 
-    attr_reader :client, :query
+    attr_reader :client, :query, :group_id
 
     def initialize(group_id, client:, query: {})
+      @group_id = group_id
       @client = client
       @query = query
-      @group_id = group_id
     end
 
     def get(select: nil, filter: nil, count: nil, top: nil, skip: nil, order_by: nil, search: nil, skiptoken: nil)
@@ -80,7 +80,7 @@ module MsGraphRest
     private
 
     def new_with_query(query)
-      self.class.new(client: client, query: query)
+      self.class.new(group_id, client: client, query: query)
     end
   end
 end
